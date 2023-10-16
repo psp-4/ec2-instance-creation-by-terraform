@@ -1,4 +1,5 @@
 // Create a keypair for the instance
+// The public and private keys have been generated using ssh-keygen command.
 resource "aws_key_pair" "soft-key" {
   key_name   = "softkey"
   public_key = file("soft-landing.pub")
@@ -16,7 +17,7 @@ resource "aws_instance" "soft-landing-instance" {
     Project = "Web Hosting"
   }
 
-  // Send the script file to the remote machine
+  // Send the script file to the remote machine for remote execution
   provisioner "file" {
     source      = "web.sh"
     destination = "/tmp/web.sh"
@@ -25,8 +26,8 @@ resource "aws_instance" "soft-landing-instance" {
   // Provision the remote machine with the script file
   provisioner "remote-exec" {
     inline = [
-      "chmod u+x /tmp/web.sh",
-      "sudo /tmp/web.sh"
+      "chmod u+x /tmp/web.sh", // Give the current user executable permission
+      "sudo /tmp/web.sh"       // Execute the script
     ]
   }
 
@@ -34,7 +35,7 @@ resource "aws_instance" "soft-landing-instance" {
   connection {
     user        = var.USER
     private_key = file("soft-landing")
-    host        = self.public_ip
+    host        = self.public_ip // Public IP of the created instance
   }
 }
 

@@ -3,17 +3,17 @@ resource "aws_security_group" "softsite-sg" {
   name        = "softsite-sg"
   description = "Network rules for softsite"
   vpc_id      = data.aws_vpc.default.id
-  
+
   // Allow incoming traffic on port 80 from anywhere
   ingress {
     description = "Allow traffic from my IP on port 80"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] // This CIDR block for anywhere IPv4
   }
 
-  // Allow incoming traffic on port 22 from user's IP only
+  // Allow incoming traffic on port 22 from user's IP only(for SSH purposes)
   ingress {
     description = "Allow traffic from my IP on port 22"
     from_port   = 22

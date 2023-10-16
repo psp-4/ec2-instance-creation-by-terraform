@@ -18,6 +18,7 @@ variable "AMIS" {
 }
 
 // User name to login into instance during remote execution
+// This is the default user for Amazon Linux AMI
 variable "USER" {
   default = "ec2-user"
 }
@@ -26,3 +27,5 @@ variable "USER" {
 variable "MYIP" {
   default = "49.37.112.17/32"
 }
+
+
